@@ -3,12 +3,12 @@ mod decl;
 mod generic;
 mod infer;
 mod member;
+mod narrow;
 mod overload_resolve;
 mod reference;
 mod semantic_info;
 mod type_check;
 mod visibility;
-mod narrow;
 
 use std::cell::RefCell;
 use std::collections::HashMap;

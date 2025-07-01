@@ -18,7 +18,7 @@ pub struct FlowBinder<'a> {
     pub start: FlowId,
     pub unreachable: FlowId,
     pub loop_label: FlowId,
-    pub loop_post_label: FlowId,
+    pub break_target_label: FlowId,
     pub true_target: FlowId,
     pub false_target: FlowId,
     flow_nodes: Vec<FlowNode>,
@@ -39,7 +39,7 @@ impl<'a> FlowBinder<'a> {
             labels: HashMap::new(),
             start: FlowId::default(),
             unreachable: FlowId::default(),
-            loop_post_label: FlowId::default(),
+            break_target_label: FlowId::default(),
             bindings: HashMap::new(),
             goto_stats: Vec::new(),
             loop_label: FlowId::default(),
@@ -49,7 +49,7 @@ impl<'a> FlowBinder<'a> {
 
         binder.start = binder.create_start();
         binder.unreachable = binder.create_unreachable();
-        binder.loop_post_label = binder.unreachable;
+        binder.break_target_label = binder.unreachable;
         binder.loop_label = binder.unreachable;
         binder.true_target = binder.unreachable;
         binder.false_target = binder.unreachable;

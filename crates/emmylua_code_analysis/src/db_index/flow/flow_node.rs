@@ -1,6 +1,6 @@
 use emmylua_parser::{
-    LuaAssignStat, LuaAstNode, LuaAstPtr, LuaChunk, LuaClosureExpr, LuaDocTagCast, LuaExpr,
-    LuaForStat, LuaSyntaxKind, LuaSyntaxNode,
+    LuaAssignStat, LuaAstNode, LuaAstPtr, LuaCallExpr, LuaChunk, LuaClosureExpr, LuaDocTagCast,
+    LuaExpr, LuaForStat, LuaSyntaxKind, LuaSyntaxNode,
 };
 use internment::ArcIntern;
 use rowan::{TextRange, TextSize};
@@ -52,6 +52,8 @@ pub enum FlowNodeKind {
     ForIStat(LuaAstPtr<LuaForStat>),
     /// Tag cast comment
     TagCast(LuaAstPtr<LuaDocTagCast>),
+    /// Assert call
+    AssertCall(LuaAstPtr<LuaCallExpr>),
     /// Break statement
     Break,
     /// Return statement

@@ -1,3 +1,5 @@
+mod get_type_at_flow;
+
 use emmylua_parser::{LuaAstNode, LuaExpr, LuaNameExpr};
 
 use crate::{
@@ -28,14 +30,7 @@ pub fn infer_name_expr_narrow_type(
     }
 
     let mut narrow_tyoe = decl_type.clone();
-
-    // loop {
-    //     if let Some(flow_node) = flow_tree.get_flow_node(flow_id) {
-
-    //     } else {
-    //         break; // No more antecedents
-    //     }
-    // }
+    if let Some(flow_node) = flow_tree.get_flow_node(flow_id) {}
 
     let value = CacheEntry::ExprCache(narrow_tyoe.clone());
     cache.add_cache(&key, value);
