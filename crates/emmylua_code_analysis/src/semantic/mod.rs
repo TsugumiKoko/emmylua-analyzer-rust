@@ -3,7 +3,6 @@ mod decl;
 mod generic;
 mod infer;
 mod member;
-mod narrow;
 mod overload_resolve;
 mod reference;
 mod semantic_info;
