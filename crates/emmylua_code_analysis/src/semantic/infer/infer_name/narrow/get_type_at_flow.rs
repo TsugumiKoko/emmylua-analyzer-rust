@@ -46,8 +46,23 @@ pub fn get_type_at_flow(
             }
             FlowNodeKind::Assignment(assign_ptr) => {
                 let assign_stat = assign_ptr.to_node(root).ok_or(InferFailReason::None)?;
+                let opt_type = get_type_at_assign_stat(
+                    db,
+                    tree,
+                    cache,
+                    root,
+                    decl_id,
+                    antecedent_flow_id,
+                    assign_stat,
+                )?;
 
-            },
+                if let Some(assign_type) = opt_type {
+                    result_type = assign_type;
+                    break;
+                } else {
+                    antecedent_flow_id = get_single_antecedent(tree, flow_node)?;
+                }
+            }
             FlowNodeKind::TrueCondition(lua_ast_ptr) => todo!(),
             FlowNodeKind::FalseCondition(lua_ast_ptr) => todo!(),
             FlowNodeKind::ForIStat(lua_ast_ptr) => todo!(),
@@ -92,6 +107,6 @@ fn get_type_at_assign_stat(
     decl_id: LuaDeclId,
     flow_id: FlowId,
     assign_stat: LuaAssignStat,
-) -> Result<LuaType, InferFailReason> {
+) -> Result<Option<LuaType>, InferFailReason> {
     todo!()
 }
