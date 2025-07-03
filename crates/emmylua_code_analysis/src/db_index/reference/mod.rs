@@ -111,14 +111,8 @@ impl LuaReferenceIndex {
             .get_decl_references(decl_id)
     }
 
-    pub fn get_var_reference_decl(
-        &self,
-        file_id: &FileId,
-        range: TextRange,
-    ) -> Option<LuaDeclId> {
-        self.file_references
-            .get(file_id)?
-            .get_decl_id(&range)
+    pub fn get_var_reference_decl(&self, file_id: &FileId, range: TextRange) -> Option<LuaDeclId> {
+        self.file_references.get(file_id)?.get_decl_id(&range)
     }
 
     pub fn get_decl_references_map(

@@ -1,14 +1,17 @@
-mod get_type_at_flow;
 mod get_type_at_cast_flow;
 mod get_type_at_condition_flow;
+mod get_type_at_flow;
 
 use emmylua_parser::{LuaAstNode, LuaChunk, LuaNameExpr};
 
 use crate::{
-    infer_param, semantic::infer::{
+    infer_param,
+    semantic::infer::{
         infer_name::{infer_global_type, narrow::get_type_at_flow::get_type_at_flow},
         InferResult,
-    }, DbIndex, FlowAntecedent, FlowId, FlowNode, FlowTree, InferFailReason, LuaDeclId, LuaInferCache, LuaType
+    },
+    DbIndex, FlowAntecedent, FlowId, FlowNode, FlowTree, InferFailReason, LuaDeclId, LuaInferCache,
+    LuaType,
 };
 
 pub fn infer_name_expr_narrow_type(

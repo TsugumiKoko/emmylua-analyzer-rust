@@ -90,7 +90,7 @@ pub fn get_type_at_flow(
             FlowNodeKind::FalseCondition(_) => {
                 // todo support
                 antecedent_flow_id = get_single_antecedent(tree, flow_node)?;
-            },
+            }
             FlowNodeKind::ForIStat(_) => {
                 // todo check for `for i = 1, 10 do end`
                 antecedent_flow_id = get_single_antecedent(tree, flow_node)?;
