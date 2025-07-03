@@ -1,14 +1,14 @@
 mod get_type_at_flow;
+mod get_type_at_cast_flow;
+mod get_type_at_condition_flow;
 
 use emmylua_parser::{LuaAstNode, LuaChunk, LuaNameExpr};
 
 use crate::{
-    infer_param,
-    semantic::infer::{
+    infer_param, semantic::infer::{
         infer_name::{infer_global_type, narrow::get_type_at_flow::get_type_at_flow},
         InferResult,
-    },
-    DbIndex, InferFailReason, LuaDeclId, LuaInferCache,
+    }, DbIndex, FlowAntecedent, FlowId, FlowNode, FlowTree, InferFailReason, LuaDeclId, LuaInferCache, LuaType
 };
 
 pub fn infer_name_expr_narrow_type(
@@ -50,4 +50,31 @@ fn get_decl_type(db: &DbIndex, decl_id: LuaDeclId) -> InferResult {
     }
 
     Err(InferFailReason::UnResolveDeclType(decl.get_id()))
+}
+
+fn get_single_antecedent(tree: &FlowTree, flow: &FlowNode) -> Result<FlowId, InferFailReason> {
+    match &flow.antecedent {
+        Some(antecedent) => match antecedent {
+            FlowAntecedent::Single(id) => Ok(*id),
+            FlowAntecedent::Multiple(multi_id) => {
+                let multi_flow = tree
+                    .get_multi_antecedents(*multi_id)
+                    .ok_or(InferFailReason::None)?;
+                if multi_flow.len() > 0 {
+                    // If there are multiple antecedents, we need to handle them separately
+                    // For now, we just return the first one
+                    Ok(multi_flow[0])
+                } else {
+                    Err(InferFailReason::None)
+                }
+            }
+        },
+        None => Err(InferFailReason::None),
+    }
+}
+
+#[derive(Debug)]
+pub enum ResultTypeOrContinue {
+    Result(LuaType),
+    Continue,
 }

@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use emmylua_parser::LuaSyntaxId;
-use smol_str::SmolStr;
 
 use crate::{FlowId, FlowNode, LuaDeclId};
 
